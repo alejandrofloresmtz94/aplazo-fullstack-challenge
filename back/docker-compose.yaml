@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: "postgres:15"
+    container_name: "postgres_container"
+    restart: always
+    environment:
+      POSTGRES_DB: challenge_db
+      POSTGRES_PASSWORD: challenge_pass
+      POSTGRES_USER: challenge_user
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - challenge_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U challenge_user -d challenge_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    build: .
+    container_name: "challenge_backend"
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/challenge_db
+      SPRING_DATASOURCE_USERNAME: challenge_user
+      SPRING_DATASOURCE_PASSWORD: challenge_pass
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - challenge_network
+    healthcheck:
+      test:
+        ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+
+networks:
+  challenge_network:
+    driver: bridge
