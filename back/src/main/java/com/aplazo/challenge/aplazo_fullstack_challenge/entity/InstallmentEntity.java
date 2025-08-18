@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.aplazo.challenge.aplazo_fullstack_challenge.enums.InstallmentStatus;
 
 import jakarta.persistence.Column;
@@ -34,7 +37,8 @@ public class InstallmentEntity {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "loan_id", nullable = false)
+    @JoinColumn(name = "loan_id", nullable = false, insertable = true, updatable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
     private LoanEntity loan;
 
     @Column(nullable = false, precision = 12, scale = 2)

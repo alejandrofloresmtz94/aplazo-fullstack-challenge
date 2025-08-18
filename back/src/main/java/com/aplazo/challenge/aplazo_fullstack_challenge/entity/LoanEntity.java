@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.aplazo.challenge.aplazo_fullstack_challenge.enums.LoanStatus;
 
@@ -40,7 +42,8 @@ public class LoanEntity {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false, insertable = true, updatable = false)
+    @NotFound(action = NotFoundAction.EXCEPTION)
     private CustomerEntity customer;
 
     @Column(nullable = false, precision = 12, scale = 2)
