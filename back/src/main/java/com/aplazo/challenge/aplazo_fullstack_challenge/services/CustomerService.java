@@ -2,9 +2,10 @@ package com.aplazo.challenge.aplazo_fullstack_challenge.services;
 
 import java.util.UUID;
 
-import com.aplazo.challenge.aplazo_fullstack_challenge.entity.CustomerEntity;
+import com.aplazo.challenge.aplazo_fullstack_challenge.dto.customer.CustomerRequest;
+import com.aplazo.challenge.aplazo_fullstack_challenge.dto.customer.CustomerResponse;
 
 public interface CustomerService {
-    CustomerEntity createCustomer(CustomerEntity customer);
-    CustomerEntity getCustomerById(UUID id);
+    CustomerResponse createCustomer(CustomerRequest customer);
+    CustomerResponse getCustomerById(UUID id);
 }

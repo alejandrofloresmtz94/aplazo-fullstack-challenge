@@ -59,9 +59,6 @@ ALTER TABLE installments
     ALTER COLUMN id TYPE UUID USING uuid_generate_v7(),
     ALTER COLUMN loan_id TYPE UUID USING uuid_generate_v7();
 
-ALTER TABLE error_logs 
-    ALTER COLUMN id DROP DEFAULT,
-    ALTER COLUMN id TYPE UUID USING uuid_generate_v7();
 
 -- Restauramos las restricciones de llave foránea
 ALTER TABLE loans 
@@ -76,4 +73,3 @@ ALTER TABLE installments
 ALTER TABLE customers ALTER COLUMN id SET DEFAULT uuid_generate_v7();
 ALTER TABLE loans ALTER COLUMN id SET DEFAULT uuid_generate_v7();
 ALTER TABLE installments ALTER COLUMN id SET DEFAULT uuid_generate_v7();
-ALTER TABLE error_logs ALTER COLUMN id SET DEFAULT uuid_generate_v7();

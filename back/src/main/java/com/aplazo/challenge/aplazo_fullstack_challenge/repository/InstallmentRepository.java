@@ -11,5 +11,6 @@ import com.aplazo.challenge.aplazo_fullstack_challenge.enums.InstallmentStatus;
 
 public interface InstallmentRepository extends JpaRepository<InstallmentEntity, UUID> {
     List<InstallmentEntity> findByLoan(LoanEntity loan);
+    List<InstallmentEntity> findByLoanId(UUID loanId);
     List<InstallmentEntity> findByStatus(InstallmentStatus status);
 }

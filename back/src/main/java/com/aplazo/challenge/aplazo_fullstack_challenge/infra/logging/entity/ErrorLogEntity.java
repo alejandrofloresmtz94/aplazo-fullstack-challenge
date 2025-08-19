@@ -1,7 +1,5 @@
 package com.aplazo.challenge.aplazo_fullstack_challenge.infra.logging.entity;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,14 +14,16 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "error_logs")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ErrorLogEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "UUID", updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false, length = 20)
     private String code; // patrón ^APZ[0-9]{6}$
