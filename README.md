@@ -66,7 +66,6 @@ The entire application can be run using Docker Compose for easy deployment and t
 
 3. **Frontend (Angular + Nginx)**
    - Port: 4200
-   - Proxies API calls to the backend
    - Optimized production build
 
 ### Development Tips
