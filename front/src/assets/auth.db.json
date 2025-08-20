@@ -1,0 +1,14 @@
+{
+  "admin@aplazo.com": {
+    "password": "admin123",
+    "token": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBcGxhem8iLCJzdWIiOiI2ODRjYTUyOS01MmRjLTRkMzItODNmOC1iYjc2ODE5Y2E1ODgiLCJleHAiOjk5OTk5OTk5OTksImlhdCI6MTc1NTY2Njc5Mn0.hRH_PS-lPO37QinGAsmQiMxKdf1cmBsvAHQobYV6NMIOrZg23MKerMEimseJyRAXup-cPEGCc5opeZZIV7_O6dHaasPXE4Q2mePODQQ1qgdkkQYqR23j3bIDrLYysS6l5c2P0PB-0vc-l57yiR5asWxL85ylaqIIFUev1mFbOBOgQepe-Pnwg1nloy6l-ujJxK6oe9A8wHG5xaPlNmywdi-788VLCCCFKskCsi9XEZZyKnwbXHZueD5WpPMyj4JQHdXt5jap1oiZ7ytugGUI-J_12TvaSMy4RWCub-QHzUbYG6kJgWDlB5UJ-X_Ggtgzr7-8a3azsr5PFoBqmUOzDQ"
+  },
+  "user1@aplazo.com": {
+    "password": "password123",
+    "token": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBcGxhem8iLCJzdWIiOiI2ODRjYTUyOS01MmRjLTRkMzItODNmOC1iYjc2ODE5Y2E1ODkiLCJleHAiOjk5OTk5OTk5OTksImlhdCI6MTc1NTY2Njc5Mn0.hRH_PS-lPO37QinGAsmQiMxKdf1cmBsvAHQobYV6NMIOrZg23MKerMEimseJyRAXup-cPEGCc5opeZZIV7_O6dHaasPXE4Q2mePODQQ1qgdkkQYqR23j3bIDrLYysS6l5c2P0PB-0vc-l57yiR5asWxL85ylaqIIFUev1mFbOBOgQepe-Pnwg1nloy6l-ujJxK6oe9A8wHG5xaPlNmywdi-788VLCCCFKskCsi9XEZZyKnwbXHZueD5WpPMyj4JQHdXt5jap1oiZ7ytugGUI-J_12TvaSMy4RWCub-QHzUbYG6kJgWDlB5UJ-X_Ggtgzr7-8a3azsr5PFoBqmUOzDQ"
+  },
+  "aplazo@aplazo.com": {
+    "password": "aplazo2024",
+    "token": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBcGxhem8iLCJzdWIiOiI2ODRjYTUyOS01MmRjLTRkMzItODNmOC1iYjc2ODE5Y2E1OTAiLCJleHAiOjk5OTk5OTk5OTksImlhdCI6MTc1NTY2Njc5Mn0.hRH_PS-lPO37QinGAsmQiMxKdf1cmBsvAHQobYV6NMIOrZg23MKerMEimseJyRAXup-cPEGCc5opeZZIV7_O6dHaasPXE4Q2mePODQQ1qgdkkQYqR23j3bIDrLYysS6l5c2P0PB-0vc-l57yiR5asWxL85ylaqIIFUev1mFbOBOgQepe-Pnwg1nloy6l-ujJxK6oe9A8wHG5xaPlNmywdi-788VLCCCFKskCsi9XEZZyKnwbXHZueD5WpPMyj4JQHdXt5jap1oiZ7ytugGUI-J_12TvaSMy4RWCub-QHzUbYG6kJgWDlB5UJ-X_Ggtgzr7-8a3azsr5PFoBqmUOzDQ"
+  }
+}

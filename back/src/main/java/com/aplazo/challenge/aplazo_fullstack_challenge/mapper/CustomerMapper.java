@@ -14,8 +14,8 @@ public interface CustomerMapper {
 
     // Request → Entity
     @Mapping(target = "id", ignore = true) // ID se genera en DB
-    @Mapping(target = "creditLineAmount", expression = "java(new java.math.BigDecimal(\"1.00\"))")
-    @Mapping(target = "availableCreditLineAmount", expression = "java(new java.math.BigDecimal(\"0.00\"))")
+    @Mapping(target = "creditLineAmount", expression = "java(new java.math.BigDecimal(\"1000.00\"))")
+    @Mapping(target = "availableCreditLineAmount", expression = "java(new java.math.BigDecimal(\"1000.00\"))")
     @Mapping(target = "createdAt", ignore = true)
     CustomerEntity toEntity(CustomerRequest request);
 

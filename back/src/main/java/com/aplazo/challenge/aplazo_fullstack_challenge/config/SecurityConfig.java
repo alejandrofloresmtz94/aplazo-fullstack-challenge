@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.aplazo.challenge.aplazo_fullstack_challenge.dto.ErrorResponse;
 import com.aplazo.challenge.aplazo_fullstack_challenge.exception.custom_exception.JwtDecoderInitializationException;
@@ -38,14 +39,16 @@ public class SecurityConfig {
     private static final String UNAUTHORIZED_ERROR = "UNAUTHORIZED";
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
     private final ErrorLogService errorLogService;
+    private final CorsConfigurationSource corsConfigurationSource;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/customers").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/customers").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2

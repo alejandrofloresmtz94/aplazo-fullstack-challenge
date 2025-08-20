@@ -1,0 +1,252 @@
+<div class="container mx-auto p-8">
+  <div class="max-w-2xl mx-auto">
+    <!-- Información del cliente si está disponible -->
+    <div *ngIf="customerInfo" class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h3 class="text-lg font-semibold mb-4 text-dark-primary">
+        Información del Cliente
+      </h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm text-dark-secondary">ID del Cliente:</p>
+          <p class="font-medium text-dark-primary">{{ customerInfo.id }}</p>
+        </div>
+        <div>
+          <p class="text-sm text-dark-secondary">Línea de Crédito:</p>
+          <p class="font-medium text-dark-primary">
+            ${{ customerInfo.creditLineAmount | number : "1.2-2" }}
+          </p>
+        </div>
+        <div>
+          <p class="text-sm text-dark-secondary">Crédito Disponible:</p>
+          <p class="font-medium text-special-success">
+            ${{ customerInfo.availableCreditLineAmount | number : "1.2-2" }}
+          </p>
+        </div>
+        <div>
+          <p class="text-sm text-dark-secondary">Cliente desde:</p>
+          <p class="font-medium text-dark-primary">
+            {{ customerInfo.createdAt | date : "dd/MM/yyyy" }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulario de creación de préstamo -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-6 text-dark-primary">
+        Crear Nuevo Préstamo
+      </h2>
+
+      <form [formGroup]="loanForm" (ngSubmit)="createLoan()">
+        <div class="space-y-6">
+          <!-- Customer ID -->
+          <div class="relative">
+            <label
+              for="customerId"
+              class="block text-sm font-medium text-dark-primary mb-2"
+            >
+              ID del Cliente <span class="text-special-danger">*</span>
+            </label>
+            <input
+              type="text"
+              id="customerId"
+              class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-aplazo-aplazo"
+              [ngClass]="{
+                'border-dark-tertiary':
+                  !customerId.touched || !customerId.errors,
+                'border-special-danger': customerId.touched && customerId.errors
+              }"
+              placeholder="Ej: 3fa85f64-5717-4562-b3fc-2c963f66afa7"
+              formControlName="customerId"
+            />
+            <span
+              *ngIf="customerId.touched && customerId.errors"
+              class="text-special-danger text-sm mt-1 block"
+            >
+              {{ getErrorMessage("customerId") }}
+            </span>
+          </div>
+
+          <!-- Amount -->
+          <div class="relative">
+            <label
+              for="amount"
+              class="block text-sm font-medium text-dark-primary mb-2"
+            >
+              Monto del Préstamo <span class="text-special-danger">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute left-3 top-3 text-dark-secondary">$</span>
+              <input
+                type="number"
+                id="amount"
+                class="w-full pl-8 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-aplazo-aplazo"
+                [ngClass]="{
+                  'border-dark-tertiary': !amount.touched || !amount.errors,
+                  'border-special-danger': amount.touched && amount.errors
+                }"
+                placeholder="0.00"
+                formControlName="amount"
+                step="0.01"
+                min="0.01"
+                max="999999.99"
+              />
+            </div>
+            <span
+              *ngIf="amount.touched && amount.errors"
+              class="text-special-danger text-sm mt-1 block"
+            >
+              {{ getErrorMessage("amount") }}
+            </span>
+            <p
+              *ngIf="
+                customerInfo &&
+                amount.value &&
+                amount.value > customerInfo.availableCreditLineAmount
+              "
+              class="text-special-warning text-sm mt-1"
+            >
+              Advertencia: El monto excede el crédito disponible
+            </p>
+          </div>
+        </div>
+
+        <!-- Mensajes de error/éxito -->
+        <div
+          *ngIf="errorMessage"
+          class="mt-6 bg-alert-critical-background border border-alert-critical-stroke text-alert-critical-icon px-4 py-3 rounded"
+          role="alert"
+        >
+          <strong class="font-bold">Error: </strong>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <div
+          *ngIf="successMessage"
+          class="mt-6 bg-alert-succes-background border border-alert-succes-stroke text-alert-succes-icon px-4 py-3 rounded"
+          role="alert"
+        >
+          <strong class="font-bold">Éxito: </strong>
+          <span>{{ successMessage }}</span>
+        </div>
+
+        <!-- Botón de envío -->
+        <div class="mt-8">
+          <button
+            aplzButton
+            aplzAppearance="solid"
+            aplzColor="aplazo"
+            size="lg"
+            type="submit"
+            [fullWidth]="true"
+            [disabled]="loanForm.invalid || isSubmitting"
+          >
+            <span *ngIf="!isSubmitting">Crear Préstamo</span>
+            <span *ngIf="isSubmitting">Procesando...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Información del préstamo creado -->
+    <div *ngIf="loanCreated" class="mt-6 bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold mb-4 text-dark-primary">
+        Préstamo Creado Exitosamente
+      </h3>
+      <div class="space-y-2">
+        <p>
+          <span class="font-medium">ID del Préstamo:</span> {{ loanCreated.id }}
+        </p>
+        <p>
+          <span class="font-medium">Estado:</span>
+          <span
+            class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+            [ngClass]="{
+              'bg-ordenes-pagado text-dark-primary':
+                loanCreated.status === 'ACTIVE',
+              'bg-ordenes-vencido text-dark-primary':
+                loanCreated.status === 'LATE',
+              'bg-ordenes-cancelado text-dark-primary':
+                loanCreated.status === 'COMPLETED'
+            }"
+          >
+            {{ loanCreated.status || "ACTIVE" }}
+          </span>
+        </p>
+        <p>
+          <span class="font-medium">Fecha de Creación:</span>
+          {{ loanCreated.createdAt | date : "dd/MM/yyyy HH:mm" }}
+        </p>
+
+        <!-- Plan de pagos si está disponible -->
+        <div *ngIf="loanCreated.paymentPlan" class="mt-4">
+          <h4 class="font-medium mb-2 text-dark-primary">Plan de Pagos</h4>
+          <p class="text-sm text-dark-secondary mb-2">
+            Comisión: ${{
+              loanCreated.paymentPlan.commissionAmount | number : "1.2-2"
+            }}
+          </p>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-dark-tertiary">
+              <thead class="bg-aplazo-bg">
+                <tr>
+                  <th
+                    class="px-4 py-2 text-left text-xs font-medium text-dark-secondary uppercase"
+                  >
+                    Cuota
+                  </th>
+                  <th
+                    class="px-4 py-2 text-left text-xs font-medium text-dark-secondary uppercase"
+                  >
+                    Monto
+                  </th>
+                  <th
+                    class="px-4 py-2 text-left text-xs font-medium text-dark-secondary uppercase"
+                  >
+                    Fecha de Pago
+                  </th>
+                  <th
+                    class="px-4 py-2 text-left text-xs font-medium text-dark-secondary uppercase"
+                  >
+                    Estado
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-dark-disabled">
+                <tr
+                  *ngFor="
+                    let installment of loanCreated.paymentPlan.installments;
+                    let i = index
+                  "
+                >
+                  <td class="px-4 py-2 text-sm">{{ i + 1 }}</td>
+                  <td class="px-4 py-2 text-sm">
+                    ${{ installment.amount | number : "1.2-2" }}
+                  </td>
+                  <td class="px-4 py-2 text-sm">
+                    {{ installment.scheduledPaymentDate | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td class="px-4 py-2 text-sm">
+                    <span
+                      class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                      [ngClass]="{
+                        'bg-accent-opacity-0-20 text-accent-primary':
+                          installment.status === 'NEXT',
+                        'bg-ordenes-pendienteDePago text-dark-primary':
+                          installment.status === 'PENDING',
+                        'bg-ordenes-vencido text-dark-primary':
+                          installment.status === 'ERROR'
+                      }"
+                    >
+                      {{ installment.status }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

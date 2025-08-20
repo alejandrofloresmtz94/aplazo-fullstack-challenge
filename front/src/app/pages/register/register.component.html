@@ -1,69 +1,174 @@
-<aplz-ui-logo size="lg"></aplz-ui-logo>
+<div class="p-8 flex flex-col min-h-screen">
+  <aplz-ui-logo size="lg"></aplz-ui-logo>
 
-<form [formGroup]="form" (ngSubmit)="register()">
-  <div class="grid gap-6 mb-6 md:grid-cols-2">
-    <div>
-      <label for="username" class="block mb-2 text-sm font-medium text-dark">
-        Nombre(s)
-      </label>
-      <input
-        type="text"
-        id="firstname"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Nombre(s)"
-        formControlName="firstName"
-      />
-    </div>
-
-    <div>
-      <label for="lastname" class="block mb-2 text-sm font-medium text-dark">
-        Apellido paterno
-      </label>
-
-      <input
-        type="text"
-        id="lastname"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Apellido paterno"
-        formControlName="lastName"
-      />
-    </div>
-
-    <div>
-      <label for="lastname" class="block mb-2 text-sm font-medium text-dark">
-        Apellido materno
-      </label>
-
-      <input
-        type="text"
-        id="secondLastName"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Apellido materno"
-        formControlName="secondLastName"
-      />
-    </div>
-
-    <div>
-      <label for="dateOfBirth" class="block mb-2 text-sm font-medium text-dark">
-        Fecha de nacimiento
-      </label>
-
-      <input
-        type="date"
-        id="dateOfBirth"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="Fecha de nacimiento"
-        formControlName="dateOfBirth"
-      />
-    </div>
-  </div>
-  <button
-    aplzButton
-    aplzAppearance="stroked"
-    aplzColor="dark"
-    size="md"
-    type="submit"
+  <form
+    [formGroup]="form"
+    (ngSubmit)="register()"
+    class="flex-1 flex flex-col items-center"
   >
-    Crear cuenta
-  </button>
-</form>
+    <div class="flex flex-col w-6/12 gap-6 mb-6 mt-3 justify-self-center">
+      <h1 class="font-bold text-xl text-center">Información Personal</h1>
+      <span class="text-center text-lg text-dark-secondary"
+        >Ayúdanos a completar tu información personal para verificar tu
+        cuenta</span
+      >
+      <div class="relative">
+        <label
+          for="username"
+          class="absolute -top-2 left-2 bg-white px-1 text-md text-dark-secondary"
+        >
+          Nombre(s)
+          <span class="text-special-danger">*</span>
+        </label>
+        <input
+          type="text"
+          id="firstname"
+          class="w-full px-4 py-3 pt-5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 placeholder:text-dark-secondary"
+          [ngClass]="{
+            'border-dark-tertiary': !firstName.touched || !firstName.errors,
+            'border-special-danger': firstName.touched && firstName.errors
+          }"
+          placeholder="Ingresa tu nombre(s)"
+          formControlName="firstName"
+        />
+        <span
+          *ngIf="firstName.touched && firstName.errors"
+          class="text-special-danger text-sm mt-1 block"
+        >
+          {{ getErrorMessage("firstName") }}
+        </span>
+      </div>
+
+      <div class="relative">
+        <label
+          for="lastname"
+          class="absolute -top-2 left-2 bg-white px-1 text-md text-dark-secondary"
+        >
+          Apellido Paterno
+          <span class="text-special-danger">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="lastname"
+          class="w-full px-4 py-3 pt-5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 placeholder:text-dark-secondary"
+          [ngClass]="{
+            'border-dark-tertiary': !lastName.touched || !lastName.errors,
+            'border-special-danger': lastName.touched && lastName.errors
+          }"
+          placeholder="Ingresa tu apellido paterno"
+          formControlName="lastName"
+        />
+        <span
+          *ngIf="lastName.touched && lastName.errors"
+          class="text-special-danger text-sm mt-1 block"
+        >
+          {{ getErrorMessage("lastName") }}
+        </span>
+      </div>
+
+      <div class="relative">
+        <label
+          for="secondLastName"
+          class="absolute -top-2 left-2 bg-white px-1 text-md text-dark-secondary"
+        >
+          Apellido materno
+          <span class="text-special-danger">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="secondLastName"
+          class="w-full px-4 py-3 pt-5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 placeholder:text-dark-secondary"
+          [ngClass]="{
+            'border-dark-tertiary':
+              !secondLastName.touched || !secondLastName.errors,
+            'border-special-danger':
+              secondLastName.touched && secondLastName.errors
+          }"
+          placeholder="Ingresa tu apellido materno"
+          formControlName="secondLastName"
+        />
+        <span
+          *ngIf="secondLastName.touched && secondLastName.errors"
+          class="text-special-danger text-sm mt-1 block"
+        >
+          {{ getErrorMessage("secondLastName") }}
+        </span>
+      </div>
+      <div class="relative">
+        <label
+          for="dateOfBirth"
+          class="absolute -top-2 left-2 bg-white px-1 text-md text-dark-secondary"
+        >
+          Fecha de nacimiento
+          <span class="text-special-danger">*</span>
+        </label>
+
+        <input
+          type="date"
+          id="dateOfBirth"
+          class="w-full px-4 py-3 pt-5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          [ngClass]="{
+            'border-dark-tertiary': !dateOfBirth.touched || !dateOfBirth.errors,
+            'border-special-danger': dateOfBirth.touched && dateOfBirth.errors
+          }"
+          placeholder="Fecha de nacimiento"
+          formControlName="dateOfBirth"
+        />
+        <span
+          *ngIf="dateOfBirth.touched && dateOfBirth.errors"
+          class="text-special-danger text-sm mt-1 block"
+        >
+          {{ getErrorMessage("dateOfBirth") }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Mensaje de error general -->
+    <div
+      *ngIf="errorMessage"
+      class="w-6/12 justify-self-center bg-alert-critical-background border border-alert-critical-stroke text-alert-critical-icon px-4 py-3 rounded-lg mb-4"
+      role="alert"
+    >
+      <strong class="font-bold">Error: </strong>
+      <span class="block sm:inline">{{ errorMessage }}</span>
+    </div>
+
+    <button
+      aplzButton
+      size="lg"
+      type="submit"
+      class="justify-self-center w-6/12 px-20 py-4 rounded-full transition-all duration-300 font-medium border"
+      [ngClass]="{
+        'bg-aplazo-aplazo hover:bg-aplazo-aplazo/90 active:bg-aplazo-aplazo/80 border-aplazo-aplazo text-dark-primary shadow-lg hover:shadow-xl':
+          !form.invalid && !isSubmitting,
+        'bg-dark-disabled border-dark-disabled text-dark-tertiary cursor-not-allowed':
+          form.invalid || isSubmitting
+      }"
+      [rounded]="true"
+      [disabled]="form.invalid || isSubmitting"
+    >
+      <span *ngIf="!isSubmitting">Continuar</span>
+      <span *ngIf="isSubmitting" class="flex items-center justify-center">
+        Procesando...
+      </span>
+    </button>
+    
+    <!-- Link para login -->
+    <div class="text-center mt-6">
+      <span class="text-dark-secondary">¿Ya tienes cuenta? </span>
+      <a 
+        [routerLink]="['/', 'login']" 
+        class="text-aplazo-aplazo hover:text-aplazo-aplazo/80 font-medium transition-colors"
+      >
+        Inicia sesión aquí
+      </a>
+    </div>
+  </form>
+  
+  <!-- Versión centrada al final de la página -->
+  <div class="text-center text-dark-secondary text-sm mt-auto pb-4">
+    VERSION: 5.6.0
+  </div>
+</div>

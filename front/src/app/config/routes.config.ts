@@ -1,5 +1,6 @@
 export const ROUTE_CONFIG = {
   register: 'auth',
+  login: 'login',
   app: 'apz',
   home: 'home',
   historial: 'historial',

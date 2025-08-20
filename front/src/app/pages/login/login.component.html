@@ -1,39 +1,119 @@
-<aplz-ui-logo size="lg"></aplz-ui-logo>
+<div class="p-8 flex flex-col min-h-screen">
+  <aplz-ui-logo size="lg"></aplz-ui-logo>
 
-<form [formGroup]="form" (ngSubmit)="login()">
-  <div class="grid gap-6 mb-6 md:grid-cols-2">
-    <div>
-      <label for="username" class="block mb-2 text-sm font-medium text-dark">
-        Correo electrónico
-      </label>
-      <input
-        type="text"
-        id="username"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="my_example_username"
-        formControlName="username"
-      />
+  <form [formGroup]="form" (ngSubmit)="login()" class="flex-1 flex flex-col items-center">
+    <div class="flex flex-col w-6/12 gap-6 mb-6 mt-3 justify-self-center">
+      <h1 class="font-bold text-xl text-center">Iniciar Sesión</h1>
+      <span class="text-center text-lg text-dark-secondary">
+        Ingresa tus credenciales para acceder a tu cuenta
+      </span>
+      
+      <!-- Email -->
+      <div class="relative">
+        <label
+          for="username"
+          class="absolute -top-2 left-2 bg-white px-1 text-md text-dark-secondary"
+        >
+          Correo electrónico
+          <span class="text-special-danger">*</span>
+        </label>
+        <input
+          type="email"
+          id="username"
+          class="w-full px-4 py-3 pt-5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 placeholder:text-dark-secondary"
+          [ngClass]="{
+            'border-dark-tertiary': !username.touched || !username.errors,
+            'border-special-danger': username.touched && username.errors
+          }"
+          placeholder="ejemplo@correo.com"
+          formControlName="username"
+        />
+        <span
+          *ngIf="username.touched && username.errors"
+          class="text-special-danger text-sm mt-1 block"
+        >
+          {{ getErrorMessage("username") }}
+        </span>
+      </div>
+      
+      <!-- Password -->
+      <div class="relative">
+        <label
+          for="password"
+          class="absolute -top-2 left-2 bg-white px-1 text-md text-dark-secondary"
+        >
+          Contraseña
+          <span class="text-special-danger">*</span>
+        </label>
+        <input
+          type="password"
+          id="password"
+          class="w-full px-4 py-3 pt-5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 placeholder:text-dark-secondary"
+          [ngClass]="{
+            'border-dark-tertiary': !password.touched || !password.errors,
+            'border-special-danger': password.touched && password.errors
+          }"
+          placeholder="•••••••••"
+          formControlName="password"
+        />
+        <span
+          *ngIf="password.touched && password.errors"
+          class="text-special-danger text-sm mt-1 block"
+        >
+          {{ getErrorMessage("password") }}
+        </span>
+      </div>
     </div>
-    <div>
-      <label for="password" class="block mb-2 text-sm font-medium text-dark">
-        Password
-      </label>
-      <input
-        type="password"
-        id="password"
-        class="bg-dark-background border border-dark-secondary text-dark rounded-lg focus:ring-special-info focus:border-special-info block w-full p-2.5"
-        placeholder="•••••••••"
-        formControlName="password"
-      />
+    
+    <!-- Mensaje de error general -->
+    <div
+      *ngIf="errorMessage"
+      class="w-6/12 justify-self-center bg-alert-critical-background border border-alert-critical-stroke text-alert-critical-icon px-4 py-3 rounded-lg mb-4"
+      role="alert"
+    >
+      <strong class="font-bold">Error: </strong>
+      <span class="block sm:inline">{{ errorMessage }}</span>
     </div>
+    
+    <!-- Botón de login -->
+    <button
+      aplzButton
+      size="lg"
+      type="submit"
+      class="justify-self-center w-6/12 px-20 py-4 rounded-full transition-all duration-300 font-medium border"
+      [ngClass]="{
+        'bg-aplazo-aplazo hover:bg-aplazo-aplazo/90 active:bg-aplazo-aplazo/80 border-aplazo-aplazo text-dark-primary shadow-lg hover:shadow-xl':
+          !form.invalid && !isSubmitting,
+        'bg-dark-disabled border-dark-disabled text-dark-tertiary cursor-not-allowed':
+          form.invalid || isSubmitting
+      }"
+      [rounded]="true"
+      [disabled]="form.invalid || isSubmitting"
+    >
+      <span *ngIf="!isSubmitting">Entrar</span>
+      <span *ngIf="isSubmitting" class="flex items-center justify-center">
+        <svg class="animate-spin -ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Procesando...
+      </span>
+    </button>
+    
+    <!-- Link para registro -->
+    <div class="text-center mt-6">
+      <span class="text-dark-secondary">¿No tienes cuenta? </span>
+      <a 
+        [routerLink]="['/', 'auth']" 
+        class="text-aplazo-aplazo hover:text-aplazo-aplazo/80 font-medium transition-colors"
+      >
+        Regístrate aquí
+      </a>
+    </div>
+  </form>
+  
+  <!-- Versión centrada al final de la página -->
+  <div class="text-center text-dark-secondary text-sm mt-auto pb-4">
+    VERSION: 5.6.0
   </div>
-  <button
-    aplzButton
-    aplzAppearance="stroked"
-    aplzColor="dark"
-    size="md"
-    type="submit"
-  >
-    Entrar
-  </button>
-</form>
+</div>
