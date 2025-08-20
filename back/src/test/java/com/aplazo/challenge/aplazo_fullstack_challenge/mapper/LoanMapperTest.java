@@ -3,7 +3,6 @@ package com.aplazo.challenge.aplazo_fullstack_challenge.mapper;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -56,7 +55,7 @@ class LoanMapperTest {
         // Given
         UUID loanId = UUID.randomUUID();
         UUID customerId = UUID.randomUUID();
-        LocalDateTime createdAt = LocalDateTime.now();
+        Instant createdAt = Instant.now();
 
         CustomerEntity customer = CustomerEntity.builder()
                 .id(customerId)
@@ -195,7 +194,7 @@ class LoanMapperTest {
                     .amount(new BigDecimal("1000.00"))
                     .status(status)
                     .commissionAmount(new BigDecimal("50.00"))
-                    .createdAt(LocalDateTime.now())
+                    .createdAt(Instant.now())
                     .installments(installments)
                     .build();
 
@@ -222,7 +221,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("1000.00"))
                 .status(LoanStatus.ACTIVE)
                 .commissionAmount(new BigDecimal("50.00"))
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .installments(new ArrayList<>()) // Empty list
                 .build();
 
@@ -251,7 +250,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("1000.00"))
                 .status(LoanStatus.ACTIVE)
                 .commissionAmount(new BigDecimal("50.00"))
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .installments(null) // Null list
                 .build();
 
@@ -283,7 +282,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("500.00"))
                 .status(LoanStatus.ACTIVE)
                 .commissionAmount(new BigDecimal("25.00"))
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .build();
 
         for (int i = 0; i < 5; i++) {
@@ -303,7 +302,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("500.00"))
                 .status(LoanStatus.ACTIVE)
                 .commissionAmount(new BigDecimal("25.00"))
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .installments(installments)
                 .build();
 
@@ -344,7 +343,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("500.00"))
                 .status(LoanStatus.LATE)
                 .commissionAmount(new BigDecimal("25.00"))
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .build();
 
         for (int i = 0; i < 5; i++) {
@@ -364,7 +363,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("500.00"))
                 .status(LoanStatus.LATE)
                 .commissionAmount(new BigDecimal("25.00"))
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .installments(installments)
                 .build();
 
@@ -394,7 +393,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("1000.00"))
                 .status(LoanStatus.ACTIVE)
                 .commissionAmount(BigDecimal.ZERO)
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .installments(installments)
                 .build();
 
@@ -428,7 +427,7 @@ class LoanMapperTest {
                 .amount(new BigDecimal("500.00"))
                 .status(LoanStatus.ACTIVE)
                 .commissionAmount(new BigDecimal("25.00"))
-                .createdAt(LocalDateTime.now())
+                .createdAt(Instant.now())
                 .build();
 
         for (int i = 0; i < 5; i++) {

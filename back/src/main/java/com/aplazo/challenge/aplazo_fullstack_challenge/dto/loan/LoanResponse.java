@@ -1,7 +1,7 @@
 package com.aplazo.challenge.aplazo_fullstack_challenge.dto.loan;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 import com.aplazo.challenge.aplazo_fullstack_challenge.enums.LoanStatus;
@@ -21,7 +21,7 @@ public class LoanResponse {
 
     private LoanStatus status;
 
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     private PaymentPlan paymentPlan;
 
